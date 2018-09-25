@@ -1,5 +1,6 @@
 import os
 from utils import *
+from astar import AStar
 
 directoryPath = "boards/"
 boardDirectory = {}
@@ -25,3 +26,7 @@ textFile = readTextFromFile(directoryPath, filePath)
 nodeList = textToNodes(textFile)
 stage = createStage(nodeList)
 printStage(stage)
+
+start, goal = findStartAndEnd(nodeList)
+currentAStar = AStar(start, goal, nodeList)
+currentAStar.run()

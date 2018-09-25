@@ -1,5 +1,5 @@
 class AStar:
-    __init__(self, start, goal, board):
+    def __init__(self, start, goal, board):
         this.start = start
         this.goal = goal
         this.board = board
@@ -9,11 +9,17 @@ class AStar:
         this.closedSet = []
         this.cameFrom = {}
 
+    def reconstruct_path(cameFrom, current):
+        total_path = []
+        while current in cameFrom.iterkeys():
+            current = cameFrom[current]
+            total_path.append(current)
+        return total_path
 
     def run():
         while openSet:
             current = heapq.heappop(openSet)
-            if current == goal
+            if current == goal:
                 return reconstruct_path(cameFrom, current)
 
             heapq.heappush(closedSet, current)
