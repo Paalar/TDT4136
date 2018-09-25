@@ -35,3 +35,6 @@ def createStage(stageResult):
 def printStage(stage):
     for xAxis in stage:
         print(" ".join(xAxis))
+
+def manhattanDistance(start,end):
+    return abs(end.x - start.x) + abs(end.y + start.y)
