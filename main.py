@@ -7,7 +7,7 @@ boardDirectory = {}
 
 def iterateDirectory(directoryPath):
     directoryPath = os.fsencode(directoryPath)
-    num = 0
+    num = 1
     for file in os.listdir(directoryPath):
         filename = os.fsdecode(file)
         boardDirectory[num] = filename
@@ -24,9 +24,9 @@ iterateDirectory(directoryPath)
 filePath = getBoard()
 textFile = readTextFromFile(directoryPath, filePath)
 nodeList = textToNodes(textFile)
-stage = createStage(nodeList)
-printStage(stage)
-
-start, goal = findStartAndEnd(nodeList)
+#printStage(nodeList)
+start, goal = findStartAndEnd()
+initHeuristic(nodeList, goal)
 currentAStar = AStar(start, goal, nodeList)
-currentAStar.run()
+realMap = currentAStar.run()
+printStage(nodeList)
