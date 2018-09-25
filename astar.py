@@ -3,7 +3,9 @@ class AStar:
         this.start = start
         this.goal = goal
         this.board = board
+        this.start.gScore = 0
+        this.start.fScore = manhattanDistance(start,goal)
 
-    closedSet = []
-    openSet = []
+
+    def run():
 
