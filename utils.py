@@ -1,5 +1,21 @@
 from node import Node
 
+def findStartAndEnd(nodes):
+    start = None
+    end = None
+    index = 0
+    while not start and not end:
+        if nodes[index].nodeType == "A":
+            start = nodes[index]
+        elif nodes[index].nodeType == "B":
+            end = nodes[index]
+    return start, end
+
+def readTextFromFile(directoryPath, filePath):
+    txtUrl = "{0}{1}".format(directoryPath, filePath)
+    file_object = open(txtUrl,"r")
+    return file_object.read()
+
 def textToNodes(txt,xLength = 0):
     nodes = []
     x = 0
@@ -13,11 +29,6 @@ def textToNodes(txt,xLength = 0):
         if letter != "\n":
             nodes.append(Node(letter,[x,y]))
     return nodes
-
-
-def readTextFromFile(txtUrl):
-    file_object = open(txtUrl,"r")
-    return file_object.read()
 
 def createStage(stageResult):
     yAxis = []
