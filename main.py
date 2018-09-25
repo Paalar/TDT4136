@@ -1,12 +1,13 @@
 import os
 from utils import *
+from astar import AStar
 
 directoryPath = "boards/"
 boardDirectory = {}
 
 def iterateDirectory(directoryPath):
     directoryPath = os.fsencode(directoryPath)
-    num = 0
+    num = 1
     for file in os.listdir(directoryPath):
         filename = os.fsdecode(file)
         boardDirectory[num] = filename
@@ -23,5 +24,9 @@ iterateDirectory(directoryPath)
 filePath = getBoard()
 textFile = readTextFromFile(directoryPath, filePath)
 nodeList = textToNodes(textFile)
-stage = createStage(nodeList)
-printStage(stage)
+#printStage(nodeList)
+start, goal = findStartAndEnd()
+initHeuristic(nodeList, goal)
+currentAStar = AStar(start, goal, nodeList)
+realMap = currentAStar.run()
+printStage(nodeList)

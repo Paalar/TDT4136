@@ -1,33 +1,68 @@
 from node import Node
 
-def findStartAndEnd(nodes):
+startNode = None
+endNode = None
+
+def findStartAndEnd():
+    global startNode
+    global endNode
+    return startNode, endNode
+    """
     start = None
     end = None
     index = 0
-    while not start and not end:
+    while not start or not end:
         if nodes[index].nodeType == "A":
             start = nodes[index]
         elif nodes[index].nodeType == "B":
             end = nodes[index]
+        index += 1
     return start, end
+    """
 
 def readTextFromFile(directoryPath, filePath):
     txtUrl = "{0}{1}".format(directoryPath, filePath)
     file_object = open(txtUrl,"r")
     return file_object.read()
 
-def textToNodes(txt,xLength = 0):
+def textToNodes(txt):
+    global startNode
+    global endNode
     nodes = []
     x = 0
     y = 0
+    nestedNodes = []
     for letter in txt:
-        if x < xLength or letter != "\n":
-            x += 1
-        else:
+        if letter == "\n":
             x = 0
             y += 1
-        if letter != "\n":
-            nodes.append(Node(letter,[x,y]))
+            nodes.append(nestedNodes)
+            nestedNodes = []
+            continue
+
+        newNode = Node(letter, [x,y])
+        if letter == "A":
+            startNode = newNode
+        elif letter == "B":
+            endNode = newNode
+
+        neighborNode = None
+
+        if x:
+            neighborNode = nestedNodes[x-1]
+            if neighborNode.nodeType != "#" and newNode.nodeType != "#":
+                newNode.addNeighbor(neighborNode)
+                neighborNode.addNeighbor(newNode)
+
+        if y:
+            neighborNode = nodes[y-1][x]
+            if neighborNode.nodeType != "#" and newNode.nodeType != "#":
+                newNode.addNeighbor(neighborNode)
+                neighborNode.addNeighbor(newNode)
+
+        nestedNodes.append(newNode)
+        x += 1
+
     return nodes
 
 def createStage(stageResult):
@@ -44,8 +79,18 @@ def createStage(stageResult):
     return yAxis
 
 def printStage(stage):
-    for xAxis in stage:
-        print(" ".join(xAxis))
+    nodeTypes = []
+    for scene in stage:
+        for node in scene:
+            nodeTypes.append(node.nodeType)
+        print(" ".join(nodeTypes))
+        nodeTypes = []
+
+def initHeuristic(stage, goalNode):
+    nodeTypes = []
+    for scene in stage:
+        for node in scene:
+            node.updateHeuristic(manhattanDistance(node, goalNode))
 
 def manhattanDistance(start,end):
-    return abs(end.x - start.x) + abs(end.y + start.y)
+    return abs(end.x - start.x) + abs(end.y - start.y)
