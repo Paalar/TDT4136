@@ -6,10 +6,20 @@ class Node:
         self.x = coordinates[0]
         self.y = coordinates[1]
         self.gScore = math.inf
-        self.fScore = self.gScore + heuristic
+        self.heuristic = heuristic
+        self.neighbors = []
 
-    def isPath():
+    def isPath(self):
         self.nodeType = "O"
 
-    def updateHeuristic(heuristic):
-        self.fScore = self.gScore + heuristic
+    def updateHeuristic(self, heuristic):
+        self.heuristic = heuristic
+
+    def getFScore(self):
+        return self.gScore + self.heuristic
+
+    def addNeighbor(self, node):
+        self.neighbors.append(node)
+
+    def __lt__(self, other):
+        return self.getFScore() < other.getFScore()
