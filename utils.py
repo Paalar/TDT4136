@@ -1,4 +1,5 @@
 from node import Node
+import math
 
 startNode = None
 endNode = None
@@ -28,6 +29,7 @@ def readTextFromFile(directoryPath, filePath):
 def textToNodes(txt):
     global startNode
     global endNode
+    tileCost = {"w":100, "m":50, "f":10, "g":5, "r":1, "#":math.inf}
     nodes = []
     x = 0
     y = 0
@@ -40,7 +42,8 @@ def textToNodes(txt):
             nestedNodes = []
             continue
 
-        newNode = Node(letter, [x,y])
+        cost = tileCost.get(letter, 1)
+        newNode = Node(letter, [x,y], cost)
         if letter == "A":
             startNode = newNode
         elif letter == "B":
