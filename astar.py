@@ -32,13 +32,14 @@ class AStar:
 
             self.closedSet.append(current)
             for neighbor in current.neighbors:
-                
+
                 if neighbor in self.closedSet:
                     continue
 
-                tentative_gScore = current.gScore + 1 # All distances are 1 in this version of A*
+                print(current.nodeType)
+                tentative_gScore = current.gScore + current.cost # All distances are 1 in this version of A*
 
-                
+
                 if tentative_gScore >= neighbor.gScore:
                     continue
 
