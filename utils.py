@@ -36,6 +36,7 @@ def getAllIterations():
 def textToNodes(txt):
     global startNode
     global endNode
+    # Add cost to terrain
     tileCost = {"w":100, "m":50, "f":10, "g":5, "r":1, "#":math.inf}
     nodes = []
     x = 0
@@ -76,22 +77,6 @@ def textToNodes(txt):
         x += 1
 
     return nodes
-
-# Unused?
-'''
-def createStage(stageResult):
-    yAxis = []
-    xAxis = []
-    y = 0
-    for node in stageResult:
-        if (node.y > y):
-            y += 1
-            yAxis.append(xAxis)
-            xAxis = []
-
-        xAxis.append(node.nodeType)
-    return yAxis
-'''
 
 # Print stage from node types.
 def printStage(stage):
