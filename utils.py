@@ -3,7 +3,9 @@ import math
 
 startNode = None
 endNode = None
+allIterationsWanted = False
 
+# Function for getting start and end in other files.
 def findStartAndEnd():
     global startNode
     global endNode
@@ -26,6 +28,11 @@ def readTextFromFile(directoryPath, filePath):
     file_object = open(txtUrl,"r")
     return file_object.read()
 
+def getAllIterations():
+    global allIterationsWanted
+    return allIterationsWanted
+
+# Creates a 2d-list with node objects, sets neighbors and ignores walls & linebreaks.
 def textToNodes(txt):
     global startNode
     global endNode
@@ -51,6 +58,8 @@ def textToNodes(txt):
 
         neighborNode = None
 
+        # Adds itself as neighbor to earlier nodes
+        # and adds earlier nodes as it's own neighbors
         if x:
             neighborNode = nestedNodes[x-1]
             if neighborNode.nodeType != "#" and newNode.nodeType != "#":
@@ -68,6 +77,8 @@ def textToNodes(txt):
 
     return nodes
 
+# Unused?
+'''
 def createStage(stageResult):
     yAxis = []
     xAxis = []
@@ -80,7 +91,9 @@ def createStage(stageResult):
 
         xAxis.append(node.nodeType)
     return yAxis
+'''
 
+# Print stage from node types.
 def printStage(stage):
     nodeTypes = []
     for scene in stage:
@@ -89,11 +102,20 @@ def printStage(stage):
         print(" ".join(nodeTypes))
         nodeTypes = []
 
+# Sets heuristic to all nodes after initialising stage
+# since start and end might not be available before the stage is complete.
 def initHeuristic(stage, goalNode):
     nodeTypes = []
     for scene in stage:
         for node in scene:
             node.updateHeuristic(manhattanDistance(node, goalNode))
 
+# Calculates the manhattan distance of the start coordinates and end coordinates
+# Best choice for 4-connected grid with no weight as it gives the most correct length.
 def manhattanDistance(start,end):
     return abs(end.x - start.x) + abs(end.y - start.y)
+
+# Calculates the euclidean distance of the start coordinates and end coordinates
+# Might underestimate in a 4-connected grid with no weight due to the pythagorean theorem.
+def euclideanDistance(start,end):
+    return math.sqrt( ((end.x - start.x)**2) + ((end.y - start.y)**2) )
