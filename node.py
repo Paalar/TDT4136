@@ -1,7 +1,7 @@
 import math
 
 class Node:
-    def __init__(self, nodeType, coordinates, heuristic = math.inf):
+    def __init__(self, nodeType, coordinates, cost, heuristic = math.inf):
         self.nodeType = nodeType
         self.x = coordinates[0]
         self.y = coordinates[1]
@@ -9,6 +9,7 @@ class Node:
         self.heuristic = heuristic
         self.neighbors = []
         self.initialQueuePlace = 0
+        self.cost = cost
 
     def isPath(self):
         self.nodeType = "X"

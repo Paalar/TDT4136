@@ -42,13 +42,13 @@ class AStar:
 
             # Iterate over neighbors and look for best paths
             for neighbor in current.neighbors:
-                
+
                 # If this neighbor has already been walked through, skip it.
                 if neighbor in self.closedSet:
                     continue
 
                 # Score to reach this neighbor
-                tentative_gScore = current.gScore + 1 # All distances are 1 in this version of A*
+                tentative_gScore = current.gScore + current.cost # All distances are 1 in this version of A*
 
                 # If it already has a better score, skip neighbor
                 if tentative_gScore >= neighbor.gScore:
